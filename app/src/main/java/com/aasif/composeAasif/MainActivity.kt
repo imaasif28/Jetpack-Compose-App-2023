@@ -1,9 +1,7 @@
 package com.aasif.composeAasif
 
 import android.os.Bundle
-import android.text.LoginFilter.UsernameFilterGMail
-import android.view.ActionProvider.VisibilityListener
-import android.widget.Toast
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -22,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.input.ImeAction
@@ -34,10 +31,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.aasif.composeAasif.ui.theme.ComposeExperimentTheme
-import kotlinx.coroutines.delay
-import java.util.jar.Attributes.Name
+import com.stevdzasan.onetap.OneTapSignInWithGoogle
+import com.stevdzasan.onetap.rememberOneTapSignInState
+
+private var filled = false
 
 class MainActivity : ComponentActivity() {
+
     @OptIn(ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,22 +104,35 @@ class MainActivity : ComponentActivity() {
                             KeyboardType.Password,
                             iconVector = Icons.Filled.Create, true
                         )
-//                        GoogleButton { }
-
-                        var clicked: Boolean by remember{ mutableStateOf(false)}
+                        val state = rememberOneTapSignInState()
+                        val authenticate = remember { mutableStateOf(false) }
+                        OneTapSignInWithGoogle(
+                            state = state,
+                            clientId = "502815807379-bufetuhj0dp6q111h7vrjh3055j43l94.apps.googleusercontent.com",
+                            onTokenIdReceived = { tokenId ->
+                                Log.d("LOG", tokenId)
+                                authenticate.value = true
+                            },
+                            onDialogDismissed = { message ->
+                                Log.d("LOG", message)
+                            }
+                        )
+                        var clicked: Boolean by remember { mutableStateOf(false) }
                         Button(
                             onClick = { clicked = !clicked },
                             modifier = Modifier.padding(10.dp),
                             colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primaryVariant),
                         ) {
+                            if (clicked) Validate(filled)
                             Text(text = "Submit")
-                            if (clicked) {
-                                Toast.makeText(
-                                    LocalContext.current,
-                                    "Profile data submitted.",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
+                        }
+
+                        GoogleButton(
+                            loadingText = "Signing in",
+                            onClicked = { state.open() }
+                        )
+                        if (authenticate.value) {
+                            Text(text = "Authenticated Successfully")
                         }
                         ExpandableCard(
                             title = "Description and Consent",
@@ -132,6 +145,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    @Composable
+    private fun Validate(filled: Boolean) {
+        if (filled) Toast("Profile data submitted.")
+        else Toast("Kindly fill all the details.")
     }
 }
 
@@ -162,6 +181,7 @@ fun MyTextField(
     visibilityToggle: Boolean = false
 ) {
     var text by remember { mutableStateOf(value) }
+    if (text.isNotEmpty() && text.isNotBlank()) filled = true
     var passwordVisibility by remember { mutableStateOf(visibilityToggle) }
     val icon = if (passwordVisibility) painterResource(id = R.drawable.ic_password_visibility)
     else painterResource(id = R.drawable.ic_password_visibility_off)
@@ -204,10 +224,10 @@ fun MyTextField(
 //        shape = MaterialTheme.shapes.large,
         keyboardOptions = KeyboardOptions(
             keyboardType = inputType,
-            imeAction = ImeAction.Default
+            imeAction = ImeAction.Next
         ),
         keyboardActions = KeyboardActions(
-            onDone = {
+            onNext = {
                 println("Recorded")
             }
         )

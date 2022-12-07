@@ -16,6 +16,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aasif.composeAasif.ui.theme.Shapes
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun GoogleButton(
@@ -71,6 +73,10 @@ fun GoogleButton(
                     color = progressIndicatorColor
                 )
                 onClicked()
+            }
+            LaunchedEffect(Unit) {
+                delay(5.seconds)
+                clicked = false
             }
         }
     }

@@ -53,18 +53,19 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Top,
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         MyTextStyle(txt = getString(R.string.signUp))
-                        Spacer(modifier = Modifier.height(24.dp))
+//                        Spacer(modifier = Modifier.height(24.dp))
                         MainScreen()
+                        Text(text = getString(R.string.txt_select_img))
 //                        ItemDetail()
                         /*  ListView(
                               list = listOf("Arctic Fox", "Bumble Bee", "Canary", "Dolphin", "Eel")
                           )*/
                         MyTextField(
-                            label = "Name",
-                            hint = "Username",
+                            label = getString(R.string.name),
+                            hint = getString(R.string.username_hint),
                             value = "",
                             inputType = KeyboardType.Text,
                             iconVector = Icons.Filled.AccountBox,
@@ -72,8 +73,8 @@ class MainActivity : ComponentActivity() {
                             visibilityToggle = true
                         )
                         MyTextField(
-                            "Number",
-                            "9898989898",
+                            getString(R.string.number),
+                            getString(R.string.number_hint),
                             "",
                             KeyboardType.Phone,
                             iconVector = Icons.Filled.Phone,
@@ -81,8 +82,8 @@ class MainActivity : ComponentActivity() {
                             visibilityToggle = true
                         )
                         MyTextField(
-                            "Email",
-                            "abc@xyz.com",
+                            getString(R.string.email),
+                            getString(R.string.email_hint),
                             "",
                             KeyboardType.Email,
                             iconVector = Icons.Filled.Email,
@@ -90,16 +91,16 @@ class MainActivity : ComponentActivity() {
                             visibilityToggle = true
                         )
                         MyTextField(
-                            "Password",
-                            "******",
+                            getString(R.string.password),
+                            getString(R.string.password_hint),
                             "",
                             KeyboardType.Password,
                             iconVector = Icons.Filled.Star,
                             endIconVisible = true
                         )
                         MyTextField(
-                            "Confirm Password",
-                            "******",
+                            getString(R.string.confirm_password),
+                            getString(R.string.password_hint),
                             "",
                             KeyboardType.Password,
                             iconVector = Icons.Filled.Create, true
@@ -108,13 +109,14 @@ class MainActivity : ComponentActivity() {
                         val authenticate = remember { mutableStateOf(false) }
                         OneTapSignInWithGoogle(
                             state = state,
-                            clientId = "502815807379-bufetuhj0dp6q111h7vrjh3055j43l94.apps.googleusercontent.com",
+                            clientId = BuildConfig.CLINT_ID_GCM,
                             onTokenIdReceived = { tokenId ->
                                 Log.d("LOG", tokenId)
                                 authenticate.value = true
                             },
                             onDialogDismissed = { message ->
                                 Log.d("LOG", message)
+                                authenticate.value = false
                             }
                         )
                         var clicked: Boolean by remember { mutableStateOf(false) }
@@ -126,21 +128,19 @@ class MainActivity : ComponentActivity() {
                             if (clicked) Validate(filled)
                             Text(text = "Submit")
                         }
-
+//                        Spacer(modifier = Modifier.height(24.dp))
                         GoogleButton(
                             loadingText = "Signing in",
                             onClicked = { state.open() }
                         )
-                        if (authenticate.value) {
-                            Text(text = "Authenticated Successfully")
-                        }
+//                        Spacer(modifier = Modifier.height(24.dp))
+                        if (authenticate.value) MyTextStyle(txt = "Authenticated Successfully")
                         ExpandableCard(
-                            title = "Description and Consent",
+                            title = getString(R.string.txt_description),
                             description = getString(R.string.tnc),
                             padding = (40.dp)
                         )
-                        ImageURL("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiv3CjuEunEpPuvrsKEV0f7R_OSPonuZnDUi97Hrz68T9xKpsUHRoFaivipPxNQ6QT3BIHVxtSH85xurEqxSnC1S7rQklKL8vKj40E2xgFWE9ylhjZDHbWoie3Evgl_WjnG2nQ1UxFVs9lg3IAMIv_CHCsuesUuCW_BMddUXU4JErFXLn9Twcy2tKKfHA/s1600/Android-JetpackCompose1.2-Header.png")
-
+                        ImageURL(getString(R.string.compose_banner_url))
                     }
                 }
             }

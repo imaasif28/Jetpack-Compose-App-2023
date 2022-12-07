@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">ComposeExperiment</string>
-    <string name="tnc">I/We, the undersigned, do hereby unconditionally agree, understand and consent as follows: its agents/representatives and other business partners to collect and share the information provided by you / customer with the RCL Group Entities and other business partners for the purposes as detailed under the Privacy Policy and the Terms of Use. I/We declare and acknowledge that I/We have read and understood the terms of the Privacy Policy and Terms of Use​ and shall be bound by the same.</string>
+    <string name="tnc">I/We, the undersigned, do hereby unconditionally agree, understand and consent as follows: its agents/representatives and other business partners to collect and share the information provided by you / customer with Us and other business partners for the purposes as detailed under the Privacy Policy and the Terms of Use. I/We declare and acknowledge that I/We have read and understood the terms of the Privacy Policy and Terms of Use​ and shall be bound by the same.</string>
     <string name="signUp">Sign Up / On-boarding</string>
+    <string name="compose_banner_url">https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiv3CjuEunEpPuvrsKEV0f7R_OSPonuZnDUi97Hrz68T9xKpsUHRoFaivipPxNQ6QT3BIHVxtSH85xurEqxSnC1S7rQklKL8vKj40E2xgFWE9ylhjZDHbWoie3Evgl_WjnG2nQ1UxFVs9lg3IAMIv_CHCsuesUuCW_BMddUXU4JErFXLn9Twcy2tKKfHA/s1600/Android-JetpackCompose1.2-Header.png</string>
+    <string name="txt_select_img">Select Profile Picture.</string>
+    <string name="name">Name</string>
+    <string name="username_hint">Username</string>
+    <string name="number">Number</string>
+    <string name="number_hint">9898989898</string>
+    <string name="email">Email</string>
+    <string name="email_hint">abc@xyz.com</string>
+    <string name="password">Password</string>
+    <string name="password_hint">******</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="txt_description">Description and Consent</string>
 </resources>

@@ -17,6 +17,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+//        buildConfigField "String", "CLINT_ID_GCM", '"502815807379-bufetuhj0dp6q111h7vrjh3055j43l94.apps.googleusercontent.com"'
+        buildConfigField "String", "CLINT_ID_GCM", '"206155983080-qv3l12ngs4qntrerk86jmmfelh4of36p.apps.googleusercontent.com"'
     }
 
     buildTypes {
